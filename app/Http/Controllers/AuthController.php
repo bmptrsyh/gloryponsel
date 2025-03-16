@@ -16,7 +16,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $credentials['login'], 'password' => $credentials['password']]) ||
             Auth::attempt(['username' => $credentials['login'], 'password' => $credentials['password']]) ||
-            Auth::attempt(['telepon' => $credentials['login'], 'password' => $credentials['password']])) {
+            Auth::attempt(['phone' => $credentials['login'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
