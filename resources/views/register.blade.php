@@ -10,16 +10,20 @@
     <div class="w-full max-w-lg p-8 rounded-lg">
         <h1 class="text-4xl font-bold text-[#ECECEB] mb-4 text-center">Welcome to Glory Ponsel</h1>
         
-        <h2 class="text-2xl font-medium text-[#ECECEB] mb-4">Log In</h2>
+        <h2 class="text-2xl font-medium text-[#ECECEB] mb-4">Register</h2>
         @if ($errors->any())
             <div class="bg-red-200 text-red-800 p-3 rounded mb-4">
-                {{ $errors->first('login') }}
+                {{ $errors->first('register') }}
             </div>
         @endif
-        <form action="{{ route('login.submit') }}" method="POST" class="space-y-4">
+        <form action="#" method="POST" class="space-y-4">
             @csrf
-            <input type="text" name="login" placeholder="Nomor Telepon/Username/Email" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
+            <input type="text" name="name" placeholder="Nama" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
+            <input type="email" name="email" placeholder="Email" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
             <input type="password" name="password" placeholder="Password" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
+            <input type="password" name="re-password" placeholder="Konfirmasi Password" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
+            <input type="text" name="address" placeholder="Alamat" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
+            <input type="number" name="Phone" placeholder="No. Telp" class="w-full p-4 border border-gray-300 rounded-lg text-lg" required>
             <button type="submit" class="w-full bg-[#EE3D3D] text-white py-3 rounded-lg text-lg font-medium hover:bg-red-600">LOG IN</button>
         </form>
         
@@ -35,8 +39,8 @@
         </div>
         
         <div class="mt-6 text-lg text-center">
-            <span class="text-[#ECECEB]">Belum Punya Akun?</span> 
-            <a href="{{ route('register') }}" class="text-red-600 font-semibold hover:text-blue-600">Daftar</a>
+            <span class="text-[#ECECEB]">Sudah punya akun?</span> 
+            <a href="{{ route('login') }}" class="text-red-600 font-semibold hover:text-blue-600">Log In</a>
         </div>
     </div>
 </body>
