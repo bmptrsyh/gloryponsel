@@ -1,5 +1,5 @@
 <!-- resources/views/components/layout.blade.php -->
-@props(['title' => 'Glory Ponsel', 'text1' => '', 'route' => '', 'text2' => ''])
+@props(['title' => 'Glory Ponsel', 'text1' => '', 'route' => '', 'text2' => '', 'judul' => 'Welcome to Glory Ponsel'])
 
 <!DOCTYPE html>
 <html lang="id">
@@ -11,7 +11,7 @@
 </head>
 <body class="bg-[#10316B] flex items-center justify-center min-h-screen">
     <div class="w-full max-w-lg p-8 rounded-lg">
-        <h1 class="text-4xl font-bold text-[#ECECEB] mb-4 text-center">Welcome to Glory Ponsel</h1>
+        <h1 class="text-4xl font-bold text-[#ECECEB] mb-4 text-center">{{ $judul }}</h1>
         
         <!-- Slot untuk konten dinamis -->
         {{ $slot }}
@@ -28,7 +28,7 @@
             <a href="{{ route('google.login') }}" class="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-lg text-lg text-center shadow-md hover:bg-red-600">
                 <img src="{{ asset('assets/images/google.svg') }}" alt="Google" class="w-6 h-6"> Continue with Google
             </a>
-            <a href="#" class="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-lg text-lg text-center shadow-md hover:bg-red-600">
+            <a href="{{ route('facebook.login') }}" class="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-lg text-lg text-center shadow-md hover:bg-red-600">
                 <img src="{{ asset('assets/images/facebook.svg') }}" alt="Facebook" class="w-6 h-6"> Continue with Facebook
             </a>
         </div>

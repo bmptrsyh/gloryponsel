@@ -12,11 +12,12 @@ class Pengguna extends Authenticatable
 
     protected $table = 'pengguna';
 
-    protected $fillable = ['name', 'alamat', 'email', 'phone', 'password'];
+    protected $fillable = ['name', 'alamat', 'email', 'phone', 'password', 'otp', 'otp_expires_at'];
 
     protected $hidden = ['password', 'remember_token'];
 
     protected $casts = [
         'password' => 'hashed',
+        'otp_expires_at' => 'datetime',
     ];
 }

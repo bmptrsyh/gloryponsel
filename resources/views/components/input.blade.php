@@ -1,4 +1,4 @@
-@props(['type' => 'text', 'name', 'placeholder', 'value' => '', 'required' => false])
+@props(['type' => 'text', 'name', 'placeholder' => '', 'value' => '', 'required' => false])
 
 <div class="relative w-full">
     <input 

@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    public function showLoginForm() {
+        return view('login');
+    }
+
+    public function showRegisterForm() {
+        return view('register');
+    }
+    
     public function login(LoginRequest $request)
     {
         // Tentukan apakah login menggunakan email atau nomor telepon
@@ -67,8 +76,9 @@ class AuthController extends Controller
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
-
+  
+            $googleUser = Socialite::driver('google')->stateless()->user();
+          
             // Cek apakah pengguna sudah terdaftar berdasarkan email
             $user = Pengguna::where('email', $googleUser->getEmail())->first();
 
@@ -78,8 +88,8 @@ class AuthController extends Controller
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'password' => Hash::make(uniqid()), // Buat password acak
-                    'phone' => '', // Opsional, karena tidak ada dari Google
-                    'address' => '', // Opsional
+                    'phone' => NULL,
+                    'alamat' => '', // Opsional
                 ]);
             }
 
@@ -88,7 +98,42 @@ class AuthController extends Controller
 
             return redirect('/dashboard')->with('success', 'Login berhasil!');
         } catch (\Exception $e) {
+            
+            // Tangani kesalahan jika ada
             return redirect('/login')->withErrors(['google' => 'Gagal login dengan Google. Coba lagi.']);
+        }
+    }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    // Callback dari Facebook
+    public function handleFacebookCallback()
+    {
+        try {
+            $facebookUser = Socialite::driver('facebook')->user();
+
+            // Cek apakah user sudah ada di database
+            $user = Pengguna::where('email', $facebookUser->email)->first();
+
+            if (!$user) {
+                // Jika user belum ada, buat user baru
+                $user = Pengguna::create([
+                    'name' => $facebookUser->name,
+                    'email' => $facebookUser->email,
+                    'password' => bcrypt('default_password'), // Bisa diganti dengan sesuatu yang lebih aman
+                ]);
+            }
+
+            // Login user
+            Auth::login($user);
+
+            return redirect('/dashboard'); // Ubah sesuai kebutuhan
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect('/login')->with('error', 'Gagal login dengan Facebook.');
         }
     }
 }
