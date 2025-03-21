@@ -8,7 +8,6 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -67,73 +66,72 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
-    public function redirectToGoogle()
-    {
-        return Socialite::driver('google')->redirect();
-    }
+    // public function redirectToGoogle()
+    // {
+    //     return Socialite::driver('google')->redirect();
+    // }
 
-    // Callback dari Google
-    public function handleGoogleCallback()
-    {
-        try {
+    // // Callback dari Google
+    // public function handleGoogleCallback()
+    // {
+    //     try {
   
-            $googleUser = Socialite::driver('google')->stateless()->user();
+    //         $googleUser = Socialite::driver('google')->stateless()->user();
           
-            // Cek apakah pengguna sudah terdaftar berdasarkan email
-            $user = Pengguna::where('email', $googleUser->getEmail())->first();
+    //         // Cek apakah pengguna sudah terdaftar berdasarkan email
+    //         $user = Pengguna::where('email', $googleUser->getEmail())->first();
 
-            if (!$user) {
-                // Jika belum ada, buat akun baru
-                $user = Pengguna::create([
-                    'name' => $googleUser->getName(),
-                    'email' => $googleUser->getEmail(),
-                    'password' => Hash::make(uniqid()), // Buat password acak
-                    'phone' => NULL,
-                    'alamat' => '', // Opsional
-                ]);
-            }
+    //         if (!$user) {
+    //             // Jika belum ada, buat akun baru
+    //             $user = Pengguna::create([
+    //                 'name' => $googleUser->getName(),
+    //                 'email' => $googleUser->getEmail(),
+    //                 'password' => Hash::make(uniqid()), // Buat password acak
+    //                 'phone' => NULL,
+    //                 'alamat' => '', // Opsional
+    //             ]);
+    //         }
 
-            // Login pengguna
-            Auth::login($user, true);
+    //         // Login pengguna
+    //         Auth::login($user, true);
 
-            return redirect('/dashboard')->with('success', 'Login berhasil!');
-        } catch (\Exception $e) {
+    //         return redirect('/dashboard')->with('success', 'Login berhasil!');
+    //     } catch (\Exception $e) {
             
-            // Tangani kesalahan jika ada
-            return redirect('/login')->withErrors(['google' => 'Gagal login dengan Google. Coba lagi.']);
-        }
-    }
+    //         // Tangani kesalahan jika ada
+    //         return redirect('/login')->withErrors(['google' => 'Gagal login dengan Google. Coba lagi.']);
+    //     }
+    // }
 
-    public function redirectToFacebook()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
+    // public function redirectToFacebook()
+    // {
+    //     return Socialite::driver('facebook')->redirect();
+    // }
 
-    // Callback dari Facebook
-    public function handleFacebookCallback()
-    {
-        try {
-            $facebookUser = Socialite::driver('facebook')->user();
+    // // Callback dari Facebook
+    // public function handleFacebookCallback()
+    // {
+    //     try {
+    //         $facebookUser = Socialite::driver('facebook')->user();
 
-            // Cek apakah user sudah ada di database
-            $user = Pengguna::where('email', $facebookUser->email)->first();
+    //         // Cek apakah user sudah ada di database
+    //         $user = Pengguna::where('email', $facebookUser->email)->first();
 
-            if (!$user) {
-                // Jika user belum ada, buat user baru
-                $user = Pengguna::create([
-                    'name' => $facebookUser->name,
-                    'email' => $facebookUser->email,
-                    'password' => bcrypt('default_password'), // Bisa diganti dengan sesuatu yang lebih aman
-                ]);
-            }
+    //         if (!$user) {
+    //             // Jika user belum ada, buat user baru
+    //             $user = Pengguna::create([
+    //                 'name' => $facebookUser->name,
+    //                 'email' => $facebookUser->email,
+    //                 'password' => bcrypt('default_password'), // Bisa diganti dengan sesuatu yang lebih aman
+    //             ]);
+    //         }
 
-            // Login user
-            Auth::login($user);
+    //         // Login user
+    //         Auth::login($user);
 
-            return redirect('/dashboard'); // Ubah sesuai kebutuhan
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-            return redirect('/login')->with('error', 'Gagal login dengan Facebook.');
-        }
-    }
+    //         return redirect('/dashboard'); // Ubah sesuai kebutuhan
+    //     } catch (\Exception $e) {
+    //         return redirect('/login')->with('error', 'Gagal login dengan Facebook.');
+    //     }
+    // }
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\OTPResetPasswordController;
 
@@ -17,10 +19,13 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegisterForm')->name('register');
     Route::post('/register', 'register')->name('register.submit');
     Route::post('/logout', 'logout')->name('logout');
-    // Autentikasi Google
+});
+
+Route::controller(GoogleController::class)->group(function() {
     Route::get('/auth/google', 'redirectToGoogle')->name('google.login');
     Route::get('/auth/google/callback', 'handleGoogleCallback');
-    // Autentikasi Facebook
+});
+Route::controller(FacebookController::class)->group(function() {
     Route::get('/auth/facebook', 'redirectToFacebook')->name('facebook.login');
     Route::get('/auth/facebook/callback', 'handleFacebookCallback');
 });
