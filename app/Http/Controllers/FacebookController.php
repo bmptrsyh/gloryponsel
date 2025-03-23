@@ -28,14 +28,14 @@ class FacebookController extends Controller
                 $user = Pengguna::create([
                     'name' => $facebookUser->name,
                     'email' => $facebookUser->email,
-                    'password' => bcrypt('default_password'), // Bisa diganti dengan sesuatu yang lebih aman
+                    'password' => bcrypt('default_password'),
                 ]);
             }
 
             // Login user
             Auth::login($user);
 
-            return redirect('/dashboard'); // Ubah sesuai kebutuhan
+            return redirect('/home');
         } catch (\Exception $e) {
             return redirect('/login')->with('error', 'Gagal login dengan Facebook.');
         }

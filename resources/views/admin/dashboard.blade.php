@@ -1,5 +1,5 @@
 <div>
-    <h1>Dashboard</h1>
+    <h1>Dashboard Admin</h1>
     <div class="mt-6 text-lg text-center">
         <span class="text-[#ECECEB]">log out</span> 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">

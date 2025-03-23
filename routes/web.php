@@ -9,7 +9,7 @@ use App\Http\Controllers\OTPResetPasswordController;
 
 // Halaman Utama
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Autentikasi
@@ -31,10 +31,17 @@ Route::controller(FacebookController::class)->group(function() {
 });
 
 // Middleware Auth untuk halaman yang membutuhkan login
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::middleware('auth:web')->group(function () {
+    Route::get('/home', function () {
+        return view('home');
+    });
+});
+
+// Dashboard Admin
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    });
 });
 
 // Lupa & Reset Password

@@ -21,28 +21,53 @@ class AuthController extends Controller
     public function showRegisterForm() {
         return view('register');
     }
-    
+
     public function login(LoginRequest $request)
-    {
-        // Tentukan apakah login menggunakan email atau nomor telepon
-        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+{
+    $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
-        // Ambil data pengguna berdasarkan email atau nomor telepon
-        $user = Pengguna::where($loginType, $request->login)->first();
-
-        // Jika pengguna tidak ditemukan (seharusnya sudah dicek di LoginRequest)
-        if (!$user) {
-            return back()->withErrors(['login' => 'Akun tidak ditemukan. Silakan daftar terlebih dahulu.']);
-        }
-
-        // Coba autentikasi dengan email atau nomor telepon
-        if (Auth::attempt([$loginType => $request->login, 'password' => $request->password])) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
-        }
-
-        return back()->withErrors(['password' => 'Password salah. Coba lagi.']);
+    // Coba login sebagai admin dulu
+    if (Auth::guard('admin')->attempt([$loginType => $request->login, 'password' => $request->password])) {
+        $request->session()->regenerate();
+        return redirect()->intended('/admin/dashboard');
     }
+
+    // Jika bukan admin, coba login sebagai pengguna
+    if (Auth::guard('web')->attempt([$loginType => $request->login, 'password' => $request->password])) {
+        $request->session()->regenerate();
+        // return view ('home');
+        return redirect()->intended('/home');
+    }
+
+    return back()->withErrors(['login' => 'Email atau password salah.']);
+}
+
+    
+    // public function login(LoginRequest $request)
+    // {
+    //     // Tentukan apakah login menggunakan email atau nomor telepon
+    //     $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+    //     // Ambil data pengguna berdasarkan email atau nomor telepon
+    //     $user = Pengguna::where($loginType, $request->login)->first();
+
+    //     // Jika pengguna tidak ditemukan (seharusnya sudah dicek di LoginRequest)
+    //     if (!$user) {
+    //         return back()->withErrors(['login' => 'Akun tidak ditemukan. Silakan daftar terlebih dahulu.']);
+    //     }
+
+    //     if (Auth::guard('admin')->attempt(['email' => $request->login, 'password' => $request->password])) {
+    //         $request->session()->regenerate();
+    //         return redirect()->intended('/admin/dashboard');
+    //     }
+    //     // Coba autentikasi dengan email atau nomor telepon
+    //     if (Auth::guard('web')->attempt([$loginType => $request->login, 'password' => $request->password])) {
+    //         $request->session()->regenerate();
+    //         return redirect()->intended('/dashboard');
+    //     }
+
+    //     return back()->withErrors(['password' => 'Password salah. Coba lagi.']);
+    // }
     
 
     public function logout(Request $request)

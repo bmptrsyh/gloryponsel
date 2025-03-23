@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Admin;
 use App\Models\Pengguna;
+use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
@@ -16,9 +17,10 @@ class LoginRequest extends FormRequest
     {
         return [
             'login' => ['required', 'string', function ($attribute, $value, $fail) {
-                // Cek apakah login berupa email atau nomor telepon
+                // Cek apakah input berupa email atau nomor telepon
                 if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    if (!Pengguna::where('email', $value)->exists()) {
+                    // Cek apakah email ada di salah satu tabel (Pengguna atau Admin)
+                    if (!Pengguna::where('email', $value)->exists() && !Admin::where('email', $value)->exists()) {
                         $fail('Email ini belum terdaftar.');
                     }
                 } elseif (is_numeric($value)) {

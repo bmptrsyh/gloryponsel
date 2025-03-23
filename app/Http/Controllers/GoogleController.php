@@ -38,7 +38,7 @@ class GoogleController extends Controller
             // Login pengguna
             Auth::login($user, true);
 
-            return redirect('/dashboard')->with('success', 'Login berhasil!');
+            return redirect('/home')->with('success', 'Login berhasil!');
         } catch (\Exception $e) {
             
             // Tangani kesalahan jika ada
