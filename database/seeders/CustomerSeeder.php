@@ -17,7 +17,7 @@ class CustomerSeeder extends Seeder
         Customer::create([
             'nama' => 'Customer Glory Ponsel',
             'email' => 'customer@gmail.com',
-            'nomor_telpon' => '08123456789',
+            'nomor_telepon' => '08123456789',
             'password' => Hash::make('123456'),
 
         ]);

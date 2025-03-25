@@ -285,7 +285,7 @@ namespace App\Models {
      * @property string|null $nomor_telepon
      * @property string $email
      * @property string $nama
-     * @property mixed $id_customer
+     * @property int $id_customer
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
      * @property-read int|null $notifications_count
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereIdCustomer($value)
