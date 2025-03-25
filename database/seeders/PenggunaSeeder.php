@@ -15,11 +15,11 @@ class PenggunaSeeder extends Seeder
     public function run(): void
     {
         Pengguna::create([
-            'name' => 'Admin Glory Ponsel',
-            'username' => 'admin',
-            'email' => 'admin@gloryponsel.com',
+            'name' => 'Pengguna Glory Ponsel',
+            'email' => 'pengguna@gmail.com',
             'phone' => '08123456789',
-            'password' => Hash::make('password123')
+            'password' => Hash::make('123456'),
+
         ]);
     }
 }
