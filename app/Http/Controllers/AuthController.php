@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
@@ -24,7 +25,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
 {
-    $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+    $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nomor_telepon';
 
     // Coba login sebagai admin dulu
     if (Auth::guard('admin')->attempt([$loginType => $request->login, 'password' => $request->password])) {
@@ -80,12 +81,12 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        Pengguna::create([
-            'name' => $request->name,
+        Customer::create([
+            'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'address' => $request->address,
-            'phone' => $request->phone,
+            'alamat' => $request->alamat,
+            'nomor_telepon' => $request->nomor_telepon,
         ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');

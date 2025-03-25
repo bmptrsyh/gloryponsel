@@ -14,19 +14,19 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:pengguna,email',
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:customer,email',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
-            'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|numeric|unique:pengguna,phone',
+            'alamat' => 'nullable|string|max:255',
+            'nomor_telepon' => 'nullable|numeric|unique:customer,nomor_telepon',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Nama lengkap harus diisi.',
+            'nama.required' => 'Nama lengkap harus diisi.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah terdaftar.',
@@ -34,10 +34,10 @@ class RegisterRequest extends FormRequest
             'password.min' => 'Password minimal harus 6 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok, silakan coba lagi.',
             'password_confirmation.required' => 'Konfirmasi password wajib diisi.',
-            'address.required' => 'Alamat lengkap harus diisi.',
-            'phone.required' => 'Nomor telepon wajib diisi.',
-            'phone.numeric' => 'Nomor telepon harus berupa angka.',
-            'phone.unique' => 'Nomor telepon sudah terdaftar.',
+            'alamat.required' => 'Alamat lengkap harus diisi.',
+            'nomor_telepon.required' => 'Nomor telepon wajib diisi.',
+            'nomor_telepon.numeric' => 'Nomor telepon harus berupa angka.',
+            'nomor_telepon.unique' => 'Nomor telepon sudah terdaftar.',
         ];
     }
 }
