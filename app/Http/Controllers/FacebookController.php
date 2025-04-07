@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pengguna;
+
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,12 +22,12 @@ class FacebookController extends Controller
             $facebookUser = Socialite::driver('facebook')->user();
 
             // Cek apakah user sudah ada di database
-            $user = Pengguna::where('email', $facebookUser->email)->first();
+            $user = Customer::where('email', $facebookUser->email)->first();
 
             if (!$user) {
                 // Jika user belum ada, buat user baru
-                $user = Pengguna::create([
-                    'name' => $facebookUser->name,
+                $user = Customer::create([
+                    'nama' => $facebookUser->name,
                     'email' => $facebookUser->email,
                     'password' => bcrypt('default_password'),
                 ]);
