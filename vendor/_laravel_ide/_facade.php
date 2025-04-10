@@ -5,37 +5,37 @@ namespace Illuminate\Support\Facades;
 interface Auth
 {
     /**
-     * @return \App\Models\Pengguna|false
+     * @return \App\Models\Customer|false
      */
     public static function loginUsingId(mixed $id, bool $remember = false);
 
     /**
-     * @return \App\Models\Pengguna|false
+     * @return \App\Models\Customer|false
      */
     public static function onceUsingId(mixed $id);
 
     /**
-     * @return \App\Models\Pengguna|null
+     * @return \App\Models\Customer|null
      */
     public static function getUser();
 
     /**
-     * @return \App\Models\Pengguna
+     * @return \App\Models\Customer
      */
     public static function authenticate();
 
     /**
-     * @return \App\Models\Pengguna|null
+     * @return \App\Models\Customer|null
      */
     public static function user();
 
     /**
-     * @return \App\Models\Pengguna|null
+     * @return \App\Models\Customer|null
      */
     public static function logoutOtherDevices(string $password);
 
     /**
-     * @return \App\Models\Pengguna
+     * @return \App\Models\Customer
      */
     public static function getLastAttempted();
 }

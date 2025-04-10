@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\PonselController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\OTPResetPasswordController;
 
@@ -39,9 +41,10 @@ Route::middleware('auth:web')->group(function () {
 
 // Dashboard Admin
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin/produk', [DashboardController::class, 'produk'])->name('produk');
+    Route::get('/ponsel/create', [PonselController::class, 'create'])->name('ponsel.create');
+Route::post('/ponsel', [PonselController::class, 'store'])->name('ponsel.store');
 });
 
 // Lupa & Reset Password

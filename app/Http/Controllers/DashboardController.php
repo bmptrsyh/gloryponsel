@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Ponsel;
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function dashboard()
+    {
+        $bulan = [
+            'Januari', 'Februari', 'Maret', 'April',
+            'Mei', 'Juni', 'Juli', 'Agustus',
+            'September', 'Oktober', 'November', 'Desember'
+        ];
+    
+        $currentMonth = date('F'); // Contoh: "April"
+        $currentMonthIndo = [
+            'January' => 'Januari',
+            'February' => 'Februari',
+            'March' => 'Maret',
+            'April' => 'April',
+            'May' => 'Mei',
+            'June' => 'Juni',
+            'July' => 'Juli',
+            'August' => 'Agustus',
+            'September' => 'September',
+            'October' => 'Oktober',
+            'November' => 'November',
+            'December' => 'Desember',
+        ];
+    
+        $selectedMonth = $currentMonthIndo[$currentMonth];
+    
+        return view('admin.dashboard', compact('bulan', 'selectedMonth'));
+    }
+
+    public function produk() {
+    $produkBaru = Ponsel::where('status', 'baru')->get();
+    $produkBekas = Ponsel::where('status', 'bekas')->get();
+
+        return view('admin.produk', compact('produkBaru', 'produkBekas'));
+    }
+    
+}
