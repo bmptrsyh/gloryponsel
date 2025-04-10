@@ -37,4 +37,11 @@ class PonselController extends Controller
 
         return redirect()->route('ponsel.create')->with('success', 'Ponsel berhasil ditambahkan!');
     }
+
+    public function home()
+{
+    $produkTerbaru = Ponsel::orderBy('created_at', 'desc')->take(4)->get();
+
+    return view('home', compact('produkTerbaru'));
+}
 }

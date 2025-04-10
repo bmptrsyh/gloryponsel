@@ -10,9 +10,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\OTPResetPasswordController;
 
 // Halaman Utama
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [PonselController::class, 'home'])->name('home');
 
 // Autentikasi
 Route::controller(AuthController::class)->group(function () {
