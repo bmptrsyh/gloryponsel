@@ -32,9 +32,7 @@ Route::controller(FacebookController::class)->group(function() {
 
 // Middleware Auth untuk halaman yang membutuhkan login
 Route::middleware('auth:web')->group(function () {
-    Route::get('/home', function () {
-        return view('home');
-    });
+    Route::get('/home', [PonselController::class, 'home'])->name('home.login');
 });
 
 // Dashboard Admin
