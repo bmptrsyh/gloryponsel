@@ -102,6 +102,7 @@
                     pointBorderWidth: 2,
                 }]
             },
+            // chart
             options: {
                 responsive: true,
                 scales: {
