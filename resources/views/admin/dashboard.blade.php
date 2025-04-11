@@ -80,7 +80,7 @@
         const rawData = [
             12000000, 19000000, 3000000, 5000000, 2000000, 3000000, 10000000, 15000000,
             8000000, 12000000, 20000000, 2000000, 14000000, 16000000, 13000000,
-            11000000, 18000000, 2000000, 17000000, 2000000, 19000000, 2000000,
+            11000000, 18000000, 2000000, 17000000, 500000000, 19000000, 2000000,
             5000000, 15000000, 13000000, 12000000, 10000000, 11000000, 14000000, 20000000
         ];
     
@@ -107,15 +107,15 @@
                 scales: {
                     x: {
                         grid: {
-                            display: false // ❌ Hilangkan garis vertikal
+                            display: false 
                         }
                     },
                     y: {
                         beginAtZero: true,
                         grid: {
-                            display: true,     // ✅ Tampilkan garis horizontal
-                            drawBorder: false, // ❌ Hilangkan garis tepi
-                            color: '#e5e7eb'   // Opsional: warna abu-abu terang
+                            display: true,     
+                            drawBorder: false, 
+                            color: '#e5e7eb'   
                         },
                         ticks: {
                             callback: function (value) {
