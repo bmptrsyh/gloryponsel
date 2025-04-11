@@ -9,9 +9,9 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;  
 
-
+// hhhhh
 class AuthController extends Controller
 {
 
@@ -27,7 +27,7 @@ class AuthController extends Controller
 {
     $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nomor_telepon';
 
-    // Coba login sebagai admin dulu
+    // Coba login sebagai admin 
     if (Auth::guard('admin')->attempt([$loginType => $request->login, 'password' => $request->password])) {
         $request->session()->regenerate();
         return redirect()->intended('/admin/dashboard');

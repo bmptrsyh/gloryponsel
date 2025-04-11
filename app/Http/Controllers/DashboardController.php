@@ -15,7 +15,7 @@ class DashboardController extends Controller
             'September', 'Oktober', 'November', 'Desember'
         ];
     
-        $currentMonth = date('F'); // Contoh: "April"
+        $currentMonth = date('F');
         $currentMonthIndo = [
             'January' => 'Januari',
             'February' => 'Februari',
@@ -36,6 +36,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('bulan', 'selectedMonth'));
     }
 
+    // get produk
     public function produk() {
     $produkBaru = Ponsel::where('status', 'baru')->get();
     $produkBekas = Ponsel::where('status', 'bekas')->get();
