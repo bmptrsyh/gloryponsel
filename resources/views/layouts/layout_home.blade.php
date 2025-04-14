@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Glory Ponsel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
                 * {
@@ -100,7 +101,7 @@
         <div class="logo">Glory Ponsel</div>
         <nav>
             <a href="#">Home</a>
-            <a href="#">Produk</a>
+            <a href="{{ route('produk.view') }}">Produk</a>
             <a href="#">Tentang Kami</a>
             <a href="#">Kontak</a>
             <a href="#">
@@ -149,7 +150,7 @@
             <h4 style="margin-bottom: 10px;">USEFUL LINKS</h4>
             <ul style="list-style: none; padding: 0;">
                 <li><a href="#" style="color: #fff; text-decoration: none;">• Home</a></li>
-                <li><a href="#" style="color: #fff; text-decoration: none;">• Produk</a></li>
+                <li><a href="{{ route('produk.view') }}" style="color: #fff; text-decoration: none;">• Produk</a></li>
                 <li><a href="#" style="color: #fff; text-decoration: none;">• Tentang Kami</a></li>
                 <li><a href="#" style="color: #fff; text-decoration: none;">• Kontak</a></li>
             </ul>
@@ -181,18 +182,3 @@
 
 
 </html>
-<script>
-    function setTab(tab) {
-        const tabs = ['spesifikasi', 'testimoni'];
-
-        tabs.forEach(t => {
-            document.getElementById(`tab-${t}`).classList.add('hidden');
-            document.getElementById(`tab-${t}-btn`).classList.remove('bg-blue-700', 'text-white');
-            document.getElementById(`tab-${t}-btn`).classList.add('bg-gray-200', 'text-gray-700');
-        });
-
-        document.getElementById(`tab-${tab}`).classList.remove('hidden');
-        document.getElementById(`tab-${tab}-btn`).classList.add('bg-blue-700', 'text-white');
-        document.getElementById(`tab-${tab}-btn`).classList.remove('bg-gray-200', 'text-gray-700');
-    }
-</script>

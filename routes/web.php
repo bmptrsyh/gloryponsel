@@ -12,8 +12,7 @@ use App\Http\Controllers\OTPResetPasswordController;
 
 // Halaman Utama
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/produk', [PonselController::class, 'produk'])->name('produk.view');
-Route::get('/produk/{id}', [PonselController::class, 'show'])->name('produk.detail');
+
 
 
 // Autentikasi
@@ -37,6 +36,10 @@ Route::controller(FacebookController::class)->group(function() {
 // Middleware Auth untuk halaman yang membutuhkan login
 Route::middleware('auth:web')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.login');
+    Route::get('/produk', [PonselController::class, 'produk'])->name('produk.view');
+    Route::get('/produk/{id}', [PonselController::class, 'show'])->name('produk.detail');
+    Route::post('/beli-ponsel/{id}', [PonselController::class, 'beliPonsel'])->name('beli.ponsel');
+    Route::get('/transaksi', [PonselController::class, 'transaksi'])->name('transaksi.index');
 });
 
 // Dashboard Admin

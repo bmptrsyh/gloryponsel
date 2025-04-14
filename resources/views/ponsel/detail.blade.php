@@ -13,12 +13,15 @@
             <h2 class="text-xl font-semibold mb-2">{{ $produk->merk }} {{ $produk->model }}</h2>
             <div class="flex items-center space-x-2 mb-2">
                 <div class="text-yellow-400 text-lg">
-                    @for ($i = 5; $i < floor($produk->rating); $i++)
-                        ★
-                    @endfor
-                    @if ($produk->rating - floor($produk->rating) >= 0.5)
-                        ☆
+                    @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= floor($produk->rating))
+                        <i class="fas fa-star"></i>
+                    @elseif ($i - $produk->rating <= 0.5)
+                        <i class="fas fa-star-half-alt"></i>
+                    @else
+                        <i class="far fa-star"></i>
                     @endif
+                @endfor
                 </div>
                 <div class="text-gray-600 text-sm">{{ number_format($produk->rating, 1) }} • {{ $produk->terjual }}+ terjual</div>
             </div>
@@ -28,17 +31,20 @@
             <div class="flex items-center space-x-4 mb-6">
                 <label class="text-sm font-medium">Jumlah</label>
                 <div class="flex items-center border rounded">
-                    <button class="px-3 py-1 text-lg font-bold">-</button>
-                    <span class="px-4">1</span>
-                    <button class="px-3 py-1 text-lg font-bold">+</button>
+                    <button type="button" id="minus-btn" class="px-3 py-1 text-lg font-bold">-</button>
+                    <span id="jumlah-span" class="px-4">1</span>
+                    <button type="button" id="plus-btn" class="px-3 py-1 text-lg font-bold">+</button>
                 </div>
                 <span class="text-xs text-gray-500">Tersisa {{ $produk->stok }} buah</span>
             </div>
+            
 
             <!-- Tombol Aksi -->
             <div class="flex flex-wrap gap-4 mb-6">
-                <form method="POST" action="#">
+                <form method="POST" action="{{ route('beli.ponsel', $produk->id_ponsel) }}">
                     @csrf
+                    <input type="hidden" name="jumlah" id="jumlah_produk" value="1">
+                    <input type="hidden" name="metode_pembayaran" value="cod">
                     <button type="submit" class="bg-purple-700 text-white px-5 py-2 rounded-lg hover:bg-purple-800">Beli Sekarang</button>
                 </form>
                 <form method="POST" action="#">
@@ -107,5 +113,48 @@
     
     
 </div>
+<script>
+    function setTab(tab) {
+        const tabs = ['spesifikasi', 'testimoni'];
+
+        tabs.forEach(t => {
+            document.getElementById(`tab-${t}`).classList.add('hidden');
+            document.getElementById(`tab-${t}-btn`).classList.remove('bg-blue-700', 'text-white');
+            document.getElementById(`tab-${t}-btn`).classList.add('bg-gray-200', 'text-gray-700');
+        });
+
+        document.getElementById(`tab-${tab}`).classList.remove('hidden');
+        document.getElementById(`tab-${tab}-btn`).classList.add('bg-blue-700', 'text-white');
+        document.getElementById(`tab-${tab}-btn`).classList.remove('bg-gray-200', 'text-gray-700');
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const minusBtn = document.getElementById('minus-btn');
+        const plusBtn = document.getElementById('plus-btn');
+        const jumlahSpan = document.getElementById('jumlah-span');
+        const jumlahInput = document.getElementById('jumlah_produk');
+        const maxStok = {{ $produk->stok }};
+
+        let jumlah = 1;
+
+        minusBtn.addEventListener('click', () => {
+            if (jumlah > 1) {
+                jumlah--;
+                jumlahSpan.innerText = jumlah;
+                jumlahInput.value = jumlah;
+            }
+        });
+
+        plusBtn.addEventListener('click', () => {
+            if (jumlah < maxStok) {
+                jumlah++;
+                jumlahSpan.innerText = jumlah;
+                jumlahInput.value = jumlah;
+            }
+        });
+    });
+</script>
+
 
 @endsection
