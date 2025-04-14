@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\PonselController;
 use App\Http\Controllers\FacebookController;
@@ -10,7 +11,10 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\OTPResetPasswordController;
 
 // Halaman Utama
-Route::get('/', [PonselController::class, 'home'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/produk', [PonselController::class, 'produk'])->name('produk.view');
+Route::get('/produk/{id}', [PonselController::class, 'show'])->name('produk.detail');
+
 
 // Autentikasi
 Route::controller(AuthController::class)->group(function () {
@@ -32,14 +36,14 @@ Route::controller(FacebookController::class)->group(function() {
 
 // Middleware Auth untuk halaman yang membutuhkan login
 Route::middleware('auth:web')->group(function () {
-    Route::get('/home', [PonselController::class, 'home'])->name('home.login');
+    Route::get('/home', [HomeController::class, 'index'])->name('home.login');
 });
 
 // Dashboard Admin
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/admin/produk', [DashboardController::class, 'produk'])->name('produk');
-    Route::get('/ponsel/create', [PonselController::class, 'create'])->name('ponsel.create');
+    Route::get('/ponsel/create', [PonselController::class, 'index'])->name('ponsel.create');
 Route::post('/ponsel', [PonselController::class, 'store'])->name('ponsel.store');
 });
 

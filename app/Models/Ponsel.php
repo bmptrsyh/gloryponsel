@@ -21,4 +21,13 @@ class Ponsel extends Model
         'storage',
         'gambar',
     ];
+
+    public function ulasan()
+{
+    return $this->hasMany(Ulasan::class, 'id_ponsel', 'id_ponsel');
 }
+}
+
+
+
+

@@ -20,6 +20,7 @@ class RegisterRequest extends FormRequest
             'password_confirmation' => 'required',
             'alamat' => 'nullable|string|max:255',
             'nomor_telepon' => 'nullable|numeric|unique:customer,nomor_telepon',
+            'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 
@@ -38,6 +39,9 @@ class RegisterRequest extends FormRequest
             'nomor_telepon.required' => 'Nomor telepon wajib diisi.',
             'nomor_telepon.numeric' => 'Nomor telepon harus berupa angka.',
             'nomor_telepon.unique' => 'Nomor telepon sudah terdaftar.',
+            'foto_profil.image' => 'File harus berupa gambar.',
+            'foto_profil.mimes' => 'Format foto tidak didukung (jpeg, png, jpg).',
+            'foto_profil.max' => 'Ukuran foto maksimal 2MB.',
         ];
     }
 }

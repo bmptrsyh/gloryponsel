@@ -22,12 +22,14 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
             $user = Customer::where('email', $googleUser->getEmail())->first();
+         
     
             if (!$user) {
                 $user = Customer::create([
                     'nama' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'password' => Hash::make(uniqid()),
+                    'foto_profil' => $googleUser->getAvatar(),
                 ]);
             }
     

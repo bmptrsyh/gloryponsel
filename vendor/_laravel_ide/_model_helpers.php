@@ -321,12 +321,14 @@ namespace App\Models {
      * @property string|null $remember_token
      * @property \Illuminate\Support\Carbon|null $otp_expires_at
      * @property string|null $otp
+     * @property string|null $foto_profil
      * @property string|null $alamat
      * @property string $password
      * @property string|null $nomor_telepon
      * @property string $email
      * @property string $nama
      * @property int $id_customer
+     * @property-read mixed $foto_profil_url
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
      * @property-read int|null $notifications_count
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereIdCustomer($value)
@@ -335,6 +337,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereNomorTelepon($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer wherePassword($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereAlamat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereFotoProfil($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereOtp($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereOtpExpiresAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Customer>|Customer whereRememberToken($value)
@@ -950,6 +953,8 @@ namespace App\Models {
      * @property string $model
      * @property string $merk
      * @property int $id_ponsel
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ulasan> $ulasan
+     * @property-read int|null $ulasan_count
      * @method static \Illuminate\Database\Eloquent\Builder<Ponsel>|Ponsel whereIdPonsel($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Ponsel>|Ponsel whereMerk($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Ponsel>|Ponsel whereModel($value)

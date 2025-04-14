@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 
 class PonselController extends Controller
 {
-    public function create()
+    public function index()
     {
-        return view('ponsel.create');
+        return view('admin.create');
     }
 
     public function store(Request $request)
@@ -38,10 +38,16 @@ class PonselController extends Controller
         return redirect()->route('ponsel.create')->with('success', 'Ponsel berhasil ditambahkan!');
     }
 
-    public function home()
-{
-    $produkTerbaru = Ponsel::orderBy('created_at', 'desc')->take(4)->get();
+    public function produk() {
+        $produk = Ponsel::all(); // Mengambil semua produk
+        return view('ponsel.produk', compact('produk'));
+    }
 
-    return view('home', compact('produkTerbaru'));
+    public function show($id)
+{
+    $produk = Ponsel::with(['ulasan' => function($query) {
+        $query->orderBy('tanggal_ulasan', 'desc');
+    }])->findOrFail($id);
+    return view('ponsel.detail', compact('produk'));
 }
 }

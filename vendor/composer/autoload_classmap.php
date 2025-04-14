@@ -11,6 +11,7 @@ return array(
     'App\\Http\\Controllers\\DashboardController' => $baseDir . '/app/Http/Controllers/DashboardController.php',
     'App\\Http\\Controllers\\FacebookController' => $baseDir . '/app/Http/Controllers/FacebookController.php',
     'App\\Http\\Controllers\\GoogleController' => $baseDir . '/app/Http/Controllers/GoogleController.php',
+    'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\OTPResetPasswordController' => $baseDir . '/app/Http/Controllers/OTPResetPasswordController.php',
     'App\\Http\\Controllers\\PonselController' => $baseDir . '/app/Http/Controllers/PonselController.php',
     'App\\Http\\Requests\\LoginRequest' => $baseDir . '/app/Http/Requests/LoginRequest.php',

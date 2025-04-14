@@ -79,17 +79,27 @@ class AuthController extends Controller
     }
 
     public function register(RegisterRequest $request)
-    {
-        Customer::create([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'alamat' => $request->alamat,
-            'nomor_telepon' => $request->nomor_telepon,
-        ]);
+{
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
-    }
+    // Cek apakah ada file foto di-upload
+
+        $gambarPath = $request->file('foto_profil')->store('gambar/customer', 'public');
+    
+
+    // Buat customer baru
+    Customer::create([
+        'nama' => $request->nama,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'alamat' => $request->alamat,
+        'nomor_telepon' => $request->nomor_telepon,
+        'foto_profil' => 'storage/' . $gambarPath, // simpan path foto
+    ]);
+
+
+    return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+}
+
 
     // public function redirectToGoogle()
     // {

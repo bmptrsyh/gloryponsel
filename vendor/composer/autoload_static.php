@@ -550,6 +550,7 @@ class ComposerStaticInit88970a0117c062eed55fa8728fc43833
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
         'App\\Http\\Controllers\\FacebookController' => __DIR__ . '/../..' . '/app/Http/Controllers/FacebookController.php',
         'App\\Http\\Controllers\\GoogleController' => __DIR__ . '/../..' . '/app/Http/Controllers/GoogleController.php',
+        'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\OTPResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/OTPResetPasswordController.php',
         'App\\Http\\Controllers\\PonselController' => __DIR__ . '/../..' . '/app/Http/Controllers/PonselController.php',
         'App\\Http\\Requests\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/LoginRequest.php',
