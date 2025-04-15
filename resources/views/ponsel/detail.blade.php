@@ -47,10 +47,17 @@
                     <input type="hidden" name="metode_pembayaran" value="cod">
                     <button type="submit" class="bg-purple-700 text-white px-5 py-2 rounded-lg hover:bg-purple-800">Beli Sekarang</button>
                 </form>
-                <form method="POST" action="#">
+                <form method="POST" action="{{ route('keranjang.store') }}">
                     @csrf
-                    <button type="submit" class="border border-purple-700 text-purple-700 px-5 py-2 rounded-lg hover:bg-purple-50">Masukkan Keranjang</button>
+                    <input type="hidden" name="produk_id" value="{{ $produk->id_ponsel }}">
+                    <input type="hidden" name="jumlah" id="jumlah_keranjang" value="1"> {{-- ini tetap bisa diubah via JS --}}
+                
+                    <button type="submit" class="border border-purple-700 text-purple-700 px-5 py-2 rounded-lg hover:bg-purple-50">
+                        Masukkan Keranjang
+                    </button>
                 </form>
+                
+                
             </div>
 
             <!-- Tab Tombol -->
@@ -81,6 +88,7 @@
     </div>
 
     <div id="tab-testimoni" class="tab-content hidden">
+        <div class="mt-12 space-y-2 text-sm text-gray-700">
         <h3 class="text-lg font-semibold text-black mb-4">Penilaian Produk</h3>
     
         @forelse($produk->ulasan as $ulasan)
@@ -109,6 +117,7 @@
         @empty
             <p class="text-gray-500">Belum ada ulasan untuk produk ini.</p>
         @endforelse
+        </div>
     </div>
     
     
@@ -129,31 +138,35 @@
     }
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const minusBtn = document.getElementById('minus-btn');
-        const plusBtn = document.getElementById('plus-btn');
-        const jumlahSpan = document.getElementById('jumlah-span');
-        const jumlahInput = document.getElementById('jumlah_produk');
-        const maxStok = {{ $produk->stok }};
+document.addEventListener('DOMContentLoaded', function () {
+    const minusBtn = document.getElementById('minus-btn');
+    const plusBtn = document.getElementById('plus-btn');
+    const jumlahSpan = document.getElementById('jumlah-span');
+    const jumlahInput = document.getElementById('jumlah_produk');
+    const jumlahKeranjang = document.querySelector('input[name="jumlah"][id="jumlah_keranjang"]');
+    const maxStok = {{ $produk->stok }};
 
-        let jumlah = 1;
+    let jumlah = 1;
 
-        minusBtn.addEventListener('click', () => {
-            if (jumlah > 1) {
-                jumlah--;
-                jumlahSpan.innerText = jumlah;
-                jumlahInput.value = jumlah;
-            }
-        });
-
-        plusBtn.addEventListener('click', () => {
-            if (jumlah < maxStok) {
-                jumlah++;
-                jumlahSpan.innerText = jumlah;
-                jumlahInput.value = jumlah;
-            }
-        });
+    minusBtn.addEventListener('click', () => {
+        if (jumlah > 1) {
+            jumlah--;
+            jumlahSpan.innerText = jumlah;
+            jumlahInput.value = jumlah;
+            jumlahKeranjang.value = jumlah;
+        }
     });
+
+    plusBtn.addEventListener('click', () => {
+        if (jumlah < maxStok) {
+            jumlah++;
+            jumlahSpan.innerText = jumlah;
+            jumlahInput.value = jumlah;
+            jumlahKeranjang.value = jumlah;
+        }
+    });
+});
+
 </script>
 
 

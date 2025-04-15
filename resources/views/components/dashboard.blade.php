@@ -19,7 +19,7 @@
       
         <nav class="flex flex-col gap-4">
           <x-sidebar-link route="dashboard">Dashboard</x-sidebar-link>
-          <x-sidebar-link route="produk">Produk</x-sidebar-link>
+          <x-sidebar-link route="produk.admin">Produk</x-sidebar-link>
           <x-sidebar-link>Inbox</x-sidebar-link>
           <x-sidebar-link>Daftar Pesanan</x-sidebar-link>
           <x-sidebar-link>Stok Produk</x-sidebar-link>

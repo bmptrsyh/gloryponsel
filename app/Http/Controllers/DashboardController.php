@@ -41,7 +41,7 @@ class DashboardController extends Controller
     $produkBaru = Ponsel::where('status', 'baru')->get();
     $produkBekas = Ponsel::where('status', 'bekas')->get();
 
-        return view('admin.ponsel', compact('produkBaru', 'produkBekas'));
+        return view('admin.ponsel.ponsel', compact('produkBaru', 'produkBekas'));
     }
     
 }

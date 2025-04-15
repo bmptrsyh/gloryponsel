@@ -14,7 +14,7 @@ class PonselController extends Controller
 {
     public function index()
     {
-        return view('admin.create');
+        return view('admin.ponsel.create');
     }
 
     public function store(Request $request)
@@ -31,6 +31,7 @@ class PonselController extends Controller
             'ram' => 'required|integer',
             'storage' => 'required|integer',
             'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'warna' => 'nullable|string|max:255',
         ]);
 
         $gambarPath = $request->file('gambar')->store('gambar/ponsel', 'public');
@@ -39,8 +40,47 @@ class PonselController extends Controller
             'gambar' => 'storage/' . $gambarPath,
         ]));
 
-        return redirect()->route('ponsel.create')->with('success', 'Ponsel berhasil ditambahkan!');
+        return redirect()->route('produk.admin')->with('success', 'Ponsel berhasil ditambahkan!');
     }
+
+    public function update(Request $request, $id) {
+
+        $ponsel = Ponsel::findOrFail($id);
+
+        $validated = $request->validate([
+            'merk' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+            'harga_beli' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
+            'status' => 'required|string',
+            'processor' => 'nullable|string|max:255',
+            'dimension' => 'nullable|string|max:255',
+            'ram' => 'required|integer|min:0',
+            'storage' => 'required|integer|min:0',
+            'warna' => 'required|string|max:100',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // max 2MB
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            if ($ponsel->gambar && Storage::exists('public/' . $ponsel->gambar)) {
+                Storage::delete('public/' . $ponsel->gambar);
+            }
+
+            $validated['gambar'] = $request->file('gambar')->store('ponsel', 'public');
+        }
+
+        $ponsel->update($validated);
+
+        return redirect()->route('produk.admin')->with('success', 'Produk berhasil diperbarui.');
+    }
+
+    public function edit($id) {
+    $ponsel = Ponsel::findOrFail($id);
+    
+    return view('admin.ponsel.edit', compact('ponsel'));
+    }
+
 
     public function produk() {
         $produk = Ponsel::all(); // Mengambil semua produk

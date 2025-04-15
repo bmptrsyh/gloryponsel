@@ -2,84 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use App\Models\Pengguna;
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class OTPResetPasswordController extends Controller
 {
     // 1️⃣ Kirim OTP ke Email
-    public function sendOTP(Request $request)
-    {
+    public function sendOTP(Request $request) {
         $request->validate(['email' => 'required|email']);
 
-        $pengguna = Pengguna::where('email', $request->email)->first();
-        if (!$pengguna) {
+        $customer = Customer::where('email', $request->email)->first();
+        if (!$customer) {
             return back()->withErrors(['email' => 'Email tidak ditemukan']);
         }
 
-        // Buat OTP acak
+    // Buat OTP
         $otp = rand(100000, 999999);
-        $pengguna->otp = $otp;
-        $pengguna->otp_expires_at = now()->addMinutes(10); // Berlaku 10 menit
-        $pengguna->save();
+        $customer->otp = $otp;
+        $customer->otp_expires_at = now()->addMinutes(10);
+        $customer->save();
 
-        // Kirim email ke pengguna
-        Mail::raw("Kode OTP Anda adalah: $otp", function ($message) use ($pengguna) {
-            $message->to($pengguna->email)
-                    ->subject('Reset Password OTP');
+    // Kirim OTP via email
+        Mail::raw("Kode OTP Anda adalah: $otp", function ($message) use ($customer) {
+            $message->to($customer->email)->subject('Reset Password OTP');
         });
 
-        return redirect()->route('password.otp.verify.form', ['email' => $request->email])
-                         ->with('success', 'OTP telah dikirim ke email Anda.');
+    // Simpan email di session
+        session(['reset_email' => $request->email]);
+
+        return redirect()->route('password.otp.verify.form')->with('success', 'OTP telah dikirim ke email Anda.');
     }
 
-    // 2️⃣ Verifikasi OTP
-    public function verifyOTP(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'otp' => 'required|digits:6'
-        ]);
+    
 
-        $pengguna = Pengguna::where('email', $request->email)
+    // 2️⃣ Verifikasi OTP
+    public function verifyOTP(Request $request) {
+        $request->validate(['otp' => 'required|digits:6']);
+    
+        $email = session('reset_email');
+        if (!$email) {
+            return redirect()->route('password.request')->withErrors(['email' => 'Session berakhir. Silakan coba lagi.']);
+        }
+    
+        $customer = Customer::where('email', $email)
                             ->where('otp', $request->otp)
                             ->where('otp_expires_at', '>', Carbon::now())
                             ->first();
-
-        if (!$pengguna) {
+    
+        if (!$customer) {
             return back()->withErrors(['otp' => 'OTP salah atau telah kedaluwarsa']);
         }
-
-        // Hapus OTP setelah diverifikasi
-        $pengguna->otp = null;
-        $pengguna->otp_expires_at = null;
-        $pengguna->save();
-
-        // Redirect ke halaman reset password
-        return redirect()->route('password.reset.form', ['email' => $request->email])
+    
+        // Hapus OTP dan lanjut
+        $customer->otp = null;
+        $customer->otp_expires_at = null;
+        $customer->save();
+    
+        return redirect()->route('password.reset.form')
                          ->with('success', 'OTP berhasil diverifikasi. Silakan reset password Anda.');
     }
+    
 
     // 3️⃣ Reset Password setelah OTP Valid
-    public function resetPassword(Request $request)
-    {
+    public function resetPassword(Request $request) {
         $request->validate([
-            'email' => 'required|email',
             'password' => 'required|min:8|confirmed'
         ]);
 
-        $pengguna = Pengguna::where('email', $request->email)->first();
-        if (!$pengguna) {
+        $email = session('reset_email');
+        if (!$email) {
+            return redirect()->route('password.request')->withErrors(['email' => 'Session berakhir. Silakan coba lagi.']);
+        }
+
+        $customer = Customer::where('email', $email)->first();
+        if (!$customer) {
             return back()->withErrors(['email' => 'Email tidak ditemukan']);
         }
 
-        $pengguna->password = Hash::make($request->password);
-        $pengguna->save();
+        $customer->password = Hash::make($request->password);
+        $customer->save();
+
+    // Bersihkan session
+        session()->forget('reset_email');
 
         return redirect()->route('login')->with('status', 'Password berhasil direset. Silakan login.');
     }
+
 }
 

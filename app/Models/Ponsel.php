@@ -20,6 +20,7 @@ class Ponsel extends Model
         'ram',
         'storage',
         'gambar',
+        'warna'
     ];
 
     public function ulasan()

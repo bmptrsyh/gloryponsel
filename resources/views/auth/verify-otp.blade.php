@@ -3,10 +3,7 @@
 
     <form method="POST" action="{{ route('password.otp.verify') }}" class="space-y-4">
         @csrf
-        <input type="hidden" name="email" value="{{ request()->query('email') }}">
-        <x-input type="text" name="otp" placeholder="Masukkan OTP" required="true"/>       
+        <x-input type="text" name="otp" placeholder="Masukkan OTP" required="true"/>
         <button type="submit" class="w-full bg-[#EE3D3D] text-white py-3 rounded-lg text-lg font-medium hover:bg-red-600">Verifikasi</button>
     </form>
 </x-layout>
-
-

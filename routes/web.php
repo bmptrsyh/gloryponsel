@@ -7,11 +7,17 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\PonselController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\OTPResetPasswordController;
 
 // Halaman Utama
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
+
+Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjang.store');
+
 
 
 
@@ -45,9 +51,11 @@ Route::middleware('auth:web')->group(function () {
 // Dashboard Admin
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/admin/produk', [DashboardController::class, 'produk'])->name('produk');
+    Route::get('/admin/produk', [DashboardController::class, 'produk'])->name('produk.admin');
     Route::get('/ponsel/create', [PonselController::class, 'index'])->name('ponsel.create');
-Route::post('/ponsel', [PonselController::class, 'store'])->name('ponsel.store');
+    Route::post('/ponsel', [PonselController::class, 'store'])->name('ponsel.store');
+    Route::put('/ponsel/{id}', [PonselController::class, 'update'])->name('ponsel.update');
+    Route::get('/ponsel/{id}/edit', [PonselController::class, 'edit'])->name('ponsel.edit');
 });
 
 // Lupa & Reset Password
