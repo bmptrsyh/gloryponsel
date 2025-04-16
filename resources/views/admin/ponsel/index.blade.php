@@ -6,7 +6,7 @@
       
         <!-- Kanan: Tombol Aksi -->
         <div class="flex items-center space-x-4">
-            <a href="{{ route('ponsel.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+            <a href="{{ route('admin.ponsel.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                 Tambah Produk
             </a>
             <button class="border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
@@ -26,7 +26,7 @@
          </div>
          <div class="mt-auto flex space-x-2">
           {{-- Tombol Edit --}}
-          <a href="{{ route('ponsel.edit', $produk->id_ponsel) }}" 
+          <a href="{{ route('admin.ponsel.edit', $produk->id_ponsel) }}" 
              class="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-sm">
               Edit Product
           </a>

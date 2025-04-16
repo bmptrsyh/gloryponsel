@@ -100,8 +100,8 @@
     <header>
         <div class="logo">Glory Ponsel</div>
         <nav>
-            <a href="#">Home</a>
-            <a href="{{ route('produk.view') }}">Produk</a>
+            <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('produk.index') }}">Produk</a>
             <a href="#">Tentang Kami</a>
             <a href="#">Kontak</a>
             <a href="#">
@@ -149,8 +149,8 @@
         <div style="flex: 1; min-width: 200px;">
             <h4 style="margin-bottom: 10px;">USEFUL LINKS</h4>
             <ul style="list-style: none; padding: 0;">
-                <li><a href="#" style="color: #fff; text-decoration: none;">• Home</a></li>
-                <li><a href="{{ route('produk.view') }}" style="color: #fff; text-decoration: none;">• Produk</a></li>
+                <li><a href="{{ route('home') }}" style="color: #fff; text-decoration: none;">• Home</a></li>
+                <li><a href="{{ route('produk.index') }}" style="color: #fff; text-decoration: none;">• Produk</a></li>
                 <li><a href="#" style="color: #fff; text-decoration: none;">• Tentang Kami</a></li>
                 <li><a href="#" style="color: #fff; text-decoration: none;">• Kontak</a></li>
             </ul>

@@ -2,7 +2,7 @@
     <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
         <h1 class="text-2xl font-bold mb-6">Tambah Produk</h1>
 
-        <form action="{{ route('ponsel.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.ponsel.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

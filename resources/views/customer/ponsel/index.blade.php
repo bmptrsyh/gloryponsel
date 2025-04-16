@@ -13,7 +13,7 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
       <!-- Card Produk -->
         @forelse ($produk as $produk)
-        <a href="{{ route('produk.detail', $produk->id_ponsel) }}">
+        <a href="{{ route('produk.show', $produk->id_ponsel) }}">
       <div class="bg-white shadow rounded-lg p-3 text-center">
         <img src="{{ asset($produk->gambar) }}" class="mx-auto mb-2 h-48 w-48 object-contain" alt="{{ $produk->model }}">
         <p class="font-semibold">{{ $produk->merk }} {{ $produk->model }}</p>

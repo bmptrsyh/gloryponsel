@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer\Auth;
 
 use App\Models\Customer;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;  
 
 // hhhhh

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Models\Ponsel;
-use App\Models\Customer;
 use App\Models\Ulasan;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -18,6 +19,6 @@ class HomeController extends Controller
         // Ambil data customer yang sedang login
         $customer = Auth::user();
     
-        return view('home', compact('produkTerbaru', 'customer'));
+        return view('customer.home', compact('produkTerbaru', 'customer'));
     }
 }

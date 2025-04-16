@@ -2,7 +2,7 @@
     <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
         <h1 class="text-2xl font-bold mb-6">Edit Produk</h1>
 
-        <form action="{{ route('ponsel.update', $ponsel->id_ponsel) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.ponsel.update', $ponsel->id_ponsel) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
