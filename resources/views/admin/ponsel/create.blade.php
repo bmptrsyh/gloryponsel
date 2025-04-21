@@ -43,9 +43,19 @@
                 </div>
 
                 <div>
-                    <label for="status" class="block font-medium text-gray-700 mb-1">Status</label>
-                    <x-input name="status" />
+                    <label for="status" class="block font-medium text-gray-700 mb-1">Status Produk</label>
+                    <div class="flex space-x-4">
+                        <label class="flex items-center">
+                            <x-input type="radio" name="status" value="baru" :checked="old('status') == 'baru'" />
+                            <span class="ml-2">Baru</span>
+                        </label>
+                        <label class="flex items-center">
+                            <x-input type="radio" name="status" value="bekas" :checked="old('status') == 'bekas'" />
+                            <span class="ml-2">Bekas</span>
+                        </label>
+                    </div>
                 </div>
+                
 
                 <div>
                     <label for="processor" class="block font-medium text-gray-700 mb-1">Processor</label>

@@ -30,6 +30,6 @@ class BeliPonsel extends Model
 
     public function ponsel()
     {
-        return $this->belongsTo(Ponsel::class, 'id_ponsel', 'id_ponsel');
+        return $this->belongsTo(Ponsel::class, 'id_ponsel', 'id_ponsel')->withTrashed();
     }
 }

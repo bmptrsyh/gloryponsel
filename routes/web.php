@@ -3,13 +3,14 @@
 use Illuminate\Support\Facades\Route;
 
 
-use App\Http\Controllers\Customer\AuthController;
+use App\Http\Controllers\Customer\Auth\AuthController;
 use App\Http\Controllers\Customer\HomeController;
-use App\Http\Controllers\Customer\auth\GoogleController;
-use App\Http\Controllers\Customer\auth\FacebookController;
+use App\Http\Controllers\Customer\KeranjangController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\Customer\auth\OTPResetPasswordController;
+use App\Http\Controllers\Customer\BeliPonselController;
+use App\Http\Controllers\Customer\Auth\GoogleController;
+use App\Http\Controllers\Customer\Auth\FacebookController;
+use App\Http\Controllers\Customer\Auth\OTPResetPasswordController;
 use App\Http\Controllers\Admin\PonselController as AdminPonselController;
 use App\Http\Controllers\Customer\PonselController as CustomerPonselController;
 
@@ -42,16 +43,18 @@ Route::controller(FacebookController::class)->group(function() {
     Route::get('/auth/facebook/callback', 'handleFacebookCallback');
 });
 
-Route::middleware(['auth:web'])->prefix('produk')->name('produk.')->group(function () {
-    Route::get('/', [CustomerPonselController::class, 'index'])->name('index');
-    Route::get('/{id}', [CustomerPonselController::class, 'show'])->name('show');
+Route::middleware('auth:web')->group(function () {
+    // Route untuk produk
+    Route::prefix('produk')->name('produk.')->group(function () {
+        Route::get('/', [CustomerPonselController::class, 'index'])->name('index');
+        Route::get('/{id}', [CustomerPonselController::class, 'show'])->name('show');
+    });
+
+    // Route untuk transaksi dan beli ponsel
+    Route::post('/beli-ponsel/{id}', [BeliPonselController::class, 'beliPonsel'])->name('beli.ponsel');
+    Route::get('/transaksi', [BeliPonselController::class, 'transaksi'])->name('transaksi.index');
 });
 
-// Middleware Auth untuk halaman yang membutuhkan login
-Route::middleware('auth:web')->group(function () {
-    Route::post('/beli-ponsel/{id}', [PonselController::class, 'beliPonsel'])->name('beli.ponsel');
-    Route::get('/transaksi', [PonselController::class, 'transaksi'])->name('transaksi.index');
-});
 
 // Dashboard Admin
 // Route::middleware('auth:admin')->group(function () {
@@ -67,6 +70,15 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     // Gunakan resource controller untuk ponsel
     Route::resource('ponsel', AdminPonselController::class)->names('ponsel');
+    Route::delete('/ponsel/{id}/force-delete', [AdminPonselController::class, 'forceDelete'])->name('ponsel.forceDelete');
+    Route::patch('/ponsel/{id}/restore', [AdminPonselController::class, 'restore'])->name('ponsel.restore');
+    // Tampilkan semua ponsel yang sudah di-soft delete
+    Route::get('/admin/ponsel/softdelete', [AdminPonselController::class, 'showSoftDeleted'])->name('ponsel.softdelete');
+
+
+    Route::get('/transaksi', [AdminPonselController::class, 'semuaTransaksi'])->name('ponsel.transaksi');
+
+
 });
 
 // Lupa & Reset Password

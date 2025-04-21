@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ponsel extends Model
 {
+    use SoftDeletes,Searchable;
     protected $table = 'ponsel';
     protected $primaryKey = 'id_ponsel';
+    protected $dates = ['deleted_at'];
     protected $fillable = [
         'merk',
         'model',
@@ -27,6 +31,16 @@ class Ponsel extends Model
 {
     return $this->hasMany(Ulasan::class, 'id_ponsel', 'id_ponsel');
 }
+
+public function toSearchableArray()
+{
+    return [
+        'merk' => $this->merk,
+        'model' => $this->model,
+        'processor' => $this->processor,
+    ];
+}
+
 }
 
 

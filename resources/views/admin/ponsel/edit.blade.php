@@ -10,11 +10,9 @@
                 {{-- Kolom Gambar --}}
                 <div class="flex flex-col items-center">
                     {{-- Gambar Saat Ini --}}
-                    <img src="{{ asset($ponsel->gambar) }}" alt="Gambar Produk"
-                        class="mb-4 w-64 h-auto rounded-lg shadow">
 
                     {{-- Preview Gambar Baru --}}
-                    <img id="gambar-preview" class="mb-4 w-64 h-auto rounded-lg shadow hidden" />
+                    <img id="gambar-preview" src="{{ asset($ponsel->gambar) }}" alt="Gambar Produk" class="mb-4 rounded-lg shadow h-64 w-64 object-contain" />
 
                     {{-- Input Gambar --}}
                     <label for="gambar" class="font-medium text-gray-700 mb-2">Gambar</label>
@@ -51,9 +49,23 @@
                     </div>
 
                     <div>
-                        <label for="status" class="block font-medium text-gray-700 mb-1">Status</label>
-                        <x-input name="status" :value="$ponsel->status" />
+                        <label for="status" class="block font-medium text-gray-700 mb-1">Status Produk</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="status" value="baru"
+                                    {{ old('status', $ponsel->status) == 'baru' ? 'checked' : '' }}
+                                    class="form-radio text-indigo-600" />
+                                <span class="ml-2">Baru</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="status" value="bekas"
+                                    {{ old('status', $ponsel->status) == 'bekas' ? 'checked' : '' }}
+                                    class="form-radio text-indigo-600" />
+                                <span class="ml-2">Bekas</span>
+                            </label>
+                        </div>
                     </div>
+                               
 
                     <div>
                         <label for="processor" class="block font-medium text-gray-700 mb-1">Processor</label>
@@ -101,12 +113,8 @@
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     preview.src = e.target.result;
-                    preview.classList.remove('hidden');
                 };
                 reader.readAsDataURL(file);
-            } else {
-                preview.src = '';
-                preview.classList.add('hidden');
             }
         });
     </script>

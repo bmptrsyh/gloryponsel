@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '86f8f49791214fab67fb4b37e82a378432d569ce',
+        'reference' => '57945597ff2570ea7d5c33a378c007990bddd150',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -397,7 +397,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '86f8f49791214fab67fb4b37e82a378432d569ce',
+            'reference' => '57945597ff2570ea7d5c33a378c007990bddd150',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -438,6 +438,15 @@
             'install_path' => __DIR__ . '/../laravel/sail',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'laravel/scout' => array(
+            'pretty_version' => 'v10.14.1',
+            'version' => '10.14.1.0',
+            'reference' => '6ae3ec83ceacb554f395df9fe15318a14b79bb39',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/scout',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'laravel/serializable-closure' => array(
             'pretty_version' => 'v2.0.3',

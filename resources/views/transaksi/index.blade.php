@@ -20,6 +20,7 @@
                     <tr>
                         <th class="p-3 text-left">#</th>
                         <th class="p-3 text-left">Nama Ponsel</th>
+                        <th class="p-3 text-left">Nama Customer</th>
                         <th class="p-3 text-left">Jumlah</th>
                         <th class="p-3 text-left">Harga</th>
                         <th class="p-3 text-left">Metode Pembayaran</th>
@@ -31,7 +32,8 @@
                     @foreach($transaksi as $index => $transaksi)
                     <tr class="border-t">
                         <td class="p-3">{{ $index + 1 }}</td>
-                        <td class="p-3">{{ $transaksi->ponsel->nama ?? '-' }}</td>
+                        <td class="p-3">{{ $transaksi->ponsel->merk }}{{ $transaksi->ponsel->model }}</td>
+                        <td class="p-3">{{ $transaksi->customer->nama }}</td>
                         <td class="p-3">{{ $transaksi->jumlah }}</td>
                         <td class="p-3">Rp {{ number_format($transaksi->harga, 0, ',', '.') }}</td>
                         <td class="p-3">{{ ucfirst($transaksi->metode_pembayaran) }}</td>

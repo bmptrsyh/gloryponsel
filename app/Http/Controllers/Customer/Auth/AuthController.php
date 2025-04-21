@@ -38,7 +38,7 @@ class AuthController extends Controller
     // Jika bukan admin, coba login sebagai pengguna
     if (Auth::guard('web')->attempt([$loginType => $request->login, 'password' => $request->password])) {
         $request->session()->regenerate();
-        return redirect()->intended('/home');
+        return redirect()->intended('/');
     }
 
     return back()->withErrors(['login' => 'Email atau password salah.']);

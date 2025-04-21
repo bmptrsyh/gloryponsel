@@ -37,6 +37,16 @@ class BeliPonselController extends Controller
         $produk->stok -= $jumlah;
         $produk->save();
 
-        return redirect()->route('transaksi.index')->with('success', 'Pembelian berhasil diproses');
+        return redirect()->route('produk.index')->with('success', 'Pembelian berhasil diproses');
+    }
+
+    public function transaksi()
+    {
+        $transaksi = BeliPonsel::with('ponsel')
+            ->where('id_customer', auth()->user()->id_customer)
+            ->latest()
+            ->get();
+
+        return view('transaksi.index', compact('transaksi'));   
     }
 }

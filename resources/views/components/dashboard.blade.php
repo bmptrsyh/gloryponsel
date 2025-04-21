@@ -21,9 +21,9 @@
           <x-sidebar-link route="admin.dashboard">Dashboard</x-sidebar-link>
           <x-sidebar-link route="admin.ponsel.index">Produk</x-sidebar-link>
           <x-sidebar-link>Inbox</x-sidebar-link>
-          <x-sidebar-link>Daftar Pesanan</x-sidebar-link>
+          <x-sidebar-link >Daftar Pesanan</x-sidebar-link>
           <x-sidebar-link>Stok Produk</x-sidebar-link>
-          <x-sidebar-link>Transaksi</x-sidebar-link>
+          <x-sidebar-link route="admin.ponsel.transaksi">Transaksi</x-sidebar-link>
         </nav>
       
         <!-- Menu bawah -->
@@ -43,7 +43,11 @@
     <main class="flex-1 flex flex-col">
       <!-- Header (dibungkus agar menyatu dengan sidebar) -->
       <div class="bg-white px-6 py-4 flex justify-between items-center min-w-screen">
-        <input type="text" placeholder="Search" class="w-1/3 px-4 py-2 border border-gray-300 rounded-lg" />
+        <form action="" method="GET" class="w-1/3 flex space-x-4">
+          <input type="text" name="keyword" placeholder="Search" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+          <input type="submit" value="submit" class="px-4 py-2 border border-gray-300 rounded-lg"/>
+
+        </form>
 
         <div class="flex items-center gap-4">
           <span class="relative">
