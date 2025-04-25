@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;  
+use Illuminate\Validation\ValidationException;
 
 // hhhhh
 class AuthController extends Controller
@@ -25,24 +27,44 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function login(LoginRequest $request)
-{
-    $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nomor_telepon';
+    public function login(Request $request)
+    {
+        // Tentukan apakah input berupa email atau nomor telepon
+        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nomor_telepon';
+        
+        // Key rate limiter berdasarkan IP + input login
+        $rateLimiterKey = 'login:' . $request->login . '|' . $request->ip();
 
-    // Coba login sebagai admin 
-    if (Auth::guard('admin')->attempt([$loginType => $request->login, 'password' => $request->password])) {
-        $request->session()->regenerate();
-        return redirect()->intended('/admin/dashboard');
+        // Cek rate limit (5 percobaan per menit)
+        if (RateLimiter::tooManyAttempts($rateLimiterKey, 5)) {
+            $seconds = RateLimiter::availableIn($rateLimiterKey);
+            
+            throw ValidationException::withMessages([
+                'login' => 'Terlalu banyak percobaan login. Silakan coba lagi dalam ' . $seconds . ' detik.',
+            ]);
+        }
+
+        // Coba login sebagai admin
+        if (Auth::guard('admin')->attempt([$loginType => $request->login, 'password' => $request->password])) {
+            RateLimiter::clear($rateLimiterKey);
+            $request->session()->regenerate();
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        // Coba login sebagai user biasa
+        if (Auth::guard('web')->attempt([$loginType => $request->login, 'password' => $request->password])) {
+            RateLimiter::clear($rateLimiterKey);
+            $request->session()->regenerate();
+            return redirect()->intended('/');
+        }
+
+        // Tambahkan hit rate limiter jika gagal
+        RateLimiter::hit($rateLimiterKey);
+
+        return back()->withErrors([
+            'login' => 'Email/nomor telepon atau password salah.',
+        ]);
     }
-
-    // Jika bukan admin, coba login sebagai pengguna
-    if (Auth::guard('web')->attempt([$loginType => $request->login, 'password' => $request->password])) {
-        $request->session()->regenerate();
-        return redirect()->intended('/');
-    }
-
-    return back()->withErrors(['login' => 'Email atau password salah.']);
-}
 
     
     // public function login(LoginRequest $request)

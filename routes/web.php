@@ -28,7 +28,7 @@ Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjan
 // Autentikasi
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
-    Route::post('/login', 'login')->name('login.submit')->middleware('throttle:login');
+    Route::post('/login', 'login')->name('login.submit');
     Route::get('/register', 'showRegisterForm')->name('register');
     Route::post('/register', 'register')->name('register.submit');
     Route::post('/logout', 'logout')->name('logout');
