@@ -47,17 +47,27 @@
                     <input type="hidden" name="metode_pembayaran" value="cod">
                     <button type="submit" class="bg-purple-700 text-white px-5 py-2 rounded-lg hover:bg-purple-800">Beli Sekarang</button>
                 </form>
-                <form method="POST" action="{{ route('keranjang.store') }}">
+                <form id="paymentForm">
                     @csrf
                     <input type="hidden" name="produk_id" value="{{ $produk->id_ponsel }}">
-                    <input type="hidden" name="jumlah" id="jumlah_keranjang" value="1"> {{-- ini tetap bisa diubah via JS --}}
-                
-                    <button type="submit" class="border border-purple-700 text-purple-700 px-5 py-2 rounded-lg hover:bg-purple-50">
+                    <input type="hidden" name="jumlah" id="jumlah_keranjang" value="1">
+                    
+                    <button type="button" id="checkoutBtn" class="border border-purple-700 text-purple-700 px-5 py-2 rounded-lg hover:bg-purple-50">
                         Masukkan Keranjang
                     </button>
                 </form>
                 
                 
+            </div>
+
+            <div id="paymentModal" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white w-full max-w-4xl max-h-[80vh] overflow-y-auto p-6 rounded-lg shadow-lg z-50 hidden">
+                <button id="closeModal" class="absolute top-2 right-2 text-gray-500 text-2xl">&times;</button>
+                <h2 class="text-xl font-bold mb-4">Pilih Metode Pembayaran</h2>
+            
+                <!-- Kolom Metode Pembayaran -->
+                <div id="paymentCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Kartu Metode Pembayaran akan diisi oleh JavaScript -->
+                </div>
             </div>
 
             <!-- Tab Tombol -->
@@ -168,6 +178,80 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 </script>
+
+<script>
+    document.getElementById('checkoutBtn').addEventListener('click', function () {
+    const formData = new FormData(document.getElementById('paymentForm'));
+
+    fetch('{{ route("payment.methods") }}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const modal = document.getElementById('paymentModal');
+        const cardsContainer = document.getElementById('paymentCards');
+        cardsContainer.innerHTML = ''; // Kosongkan dulu
+
+        const methods = data.payment_methods?.paymentFee;
+        const totalAmount = parseInt(data.total_amount); // total dari backend, misalnya 12500000
+
+        if (methods && methods.length > 0) {
+            methods.forEach(method => {
+                const fee = parseInt(method.totalFee);
+                const totalBiaya = fee + totalAmount;
+
+                const card = document.createElement('div');
+                card.className = "border rounded-lg p-4 flex items-center justify-between shadow hover:shadow-md transition";
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <img src="${method.paymentImage}" alt="${method.paymentName}" class="h-10 w-10 object-contain">
+                        <div>
+                            <h3 class="font-semibold">${method.paymentName}</h3>
+                            <p class="text-sm text-gray-500">Biaya: Rp${totalBiaya.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <button class="chooseBtn bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                            data-method="${method.paymentMethod}">
+                        Pilih
+                    </button>
+                `;
+
+                cardsContainer.appendChild(card);
+            });
+
+            // Event saat tombol "Pilih" diklik
+            document.querySelectorAll('.chooseBtn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const selectedMethod = this.getAttribute('data-method');
+                    alert('Metode pembayaran dipilih: ' + selectedMethod);
+                    modal.classList.add('hidden'); // Tutup modal
+                });
+            });
+
+            modal.classList.remove('hidden'); // Tampilkan modal di depan halaman utama
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+// Tombol untuk menutup modal
+document.getElementById('closeModal').addEventListener('click', function () {
+    document.getElementById('paymentModal').classList.add('hidden');
+});
+
+
+
+
+
+    </script>
 
 
 @endsection

@@ -18,6 +18,7 @@ class HomeController extends Controller
 
         // Ambil data customer yang sedang login
         $customer = Auth::user();
+        
     
         return view('customer.home', compact('produkTerbaru', 'customer'));
     }

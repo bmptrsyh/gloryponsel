@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 
-use App\Http\Controllers\Customer\Auth\AuthController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Customer\HomeController;
-use App\Http\Controllers\Customer\KeranjangController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Customer\Auth\AuthController;
+use App\Http\Controllers\Customer\KeranjangController;
 use App\Http\Controllers\Customer\BeliPonselController;
 use App\Http\Controllers\Customer\Auth\GoogleController;
 use App\Http\Controllers\Customer\Auth\FacebookController;
@@ -14,6 +15,10 @@ use App\Http\Controllers\Customer\Auth\OTPResetPasswordController;
 use App\Http\Controllers\Admin\PonselController as AdminPonselController;
 use App\Http\Controllers\Customer\PonselController as CustomerPonselController;
 
+
+
+// routes/web.php
+Route::post('/payment-methods', [PaymentController::class, 'getPaymentMethods'])->name('payment.methods');
 
 // Halaman Utama
 Route::get('/', [HomeController::class, 'index'])->name('home');

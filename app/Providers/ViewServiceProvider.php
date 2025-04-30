@@ -23,6 +23,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         View::composer('layouts.layout_home', function ($view) {
             $view->with('customer', Auth::user());
+            
         });
     }
 }

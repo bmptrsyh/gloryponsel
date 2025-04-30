@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6bda2638eafcc3f01dd3d5b6db14021005215a20',
+        'reference' => 'c40c00528655b681e7db831d2423abea83960487',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -74,6 +74,17 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../dragonmantank/cron-expression',
             'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'duitkupg/duitku-php' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '983001aefdce35f2d994bfa1e84825169c1b930f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../duitkupg/duitku-php',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'egulias/email-validator' => array(
@@ -433,7 +444,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6bda2638eafcc3f01dd3d5b6db14021005215a20',
+            'reference' => 'c40c00528655b681e7db831d2423abea83960487',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -474,6 +485,15 @@
             'install_path' => __DIR__ . '/../laravel/sail',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'laravel/sanctum' => array(
+            'pretty_version' => 'v4.1.0',
+            'version' => '4.1.0.0',
+            'reference' => '4e4ced5023e9d8949214e0fb43d9f4bde79c7166',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/sanctum',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'laravel/scout' => array(
             'pretty_version' => 'v10.14.1',
